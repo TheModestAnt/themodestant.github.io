@@ -454,54 +454,98 @@
       color: var(--white);
     }
 
-    /* ── MEMES ── */
+    /* ── WISDOM BENTO ── */
     #memes { background: var(--surf2); }
 
-    .meme-grid {
+    .bento {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      grid-template-rows: auto;
+      gap: 16px;
     }
 
-    .meme-card {
+    .bento-card {
       background: var(--bg);
       border: 4px solid var(--white);
       box-shadow: 6px 6px 0 #000;
-      overflow: hidden;
-      transition: none;
-    }
-    .meme-card:hover { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 #000; }
-
-    .meme-visual {
-      height: 160px;
-      background: #111;
+      padding: 28px;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 72px;
-      position: relative;
-      border-bottom: 4px solid var(--white);
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      transition: none;
+      min-height: 180px;
+    }
+    .bento-card:hover { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 #000; }
+
+    .bento-wide  { grid-column: span 2; }
+    .bento-tall  { grid-row: span 2; }
+
+    .bento-accent-green  { border-color: var(--green);  box-shadow: 6px 6px 0 #000; }
+    .bento-accent-yellow { border-color: var(--yellow); box-shadow: 6px 6px 0 #000; }
+    .bento-accent-pink   { border-color: var(--pink);   box-shadow: 6px 6px 0 #000; }
+    .bento-accent-cyan   { border-color: var(--cyan);   box-shadow: 6px 6px 0 #000; }
+    .bento-accent-purple { border-color: var(--purple); box-shadow: 6px 6px 0 #000; }
+    .bento-accent-red    { border-color: var(--red);    box-shadow: 6px 6px 0 #000; }
+
+    .bento-icon {
+      font-size: 2.6rem;
+      line-height: 1;
     }
 
-    .meme-label {
-      position: absolute;
-      left: 0; right: 0;
-      text-align: center;
+    .bento-eyebrow {
       font-family: 'Press Start 2P', monospace;
-      font-size: 0.48rem;
-      color: #fff;
-      text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
-      padding: 0 8px;
-      letter-spacing: 0.05em;
-      line-height: 1.5;
+      font-size: 0.38rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
     }
-    .meme-label.top    { top: 8px; }
-    .meme-label.bottom { bottom: 8px; }
+    .bento-eyebrow.green  { color: var(--green); }
+    .bento-eyebrow.yellow { color: var(--yellow); }
+    .bento-eyebrow.pink   { color: var(--pink); }
+    .bento-eyebrow.cyan   { color: var(--cyan); }
+    .bento-eyebrow.purple { color: var(--purple); }
+    .bento-eyebrow.red    { color: var(--red); }
 
-    .meme-footer {
-      padding: 12px 14px;
-      font-size: 0.85rem;
+    .bento-headline {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(0.55rem, 1.5vw, 0.75rem);
+      color: var(--white);
+      line-height: 1.7;
+      letter-spacing: 0.03em;
+    }
+
+    .bento-body {
+      font-size: 1rem;
       color: #aaa;
+      line-height: 1.7;
+    }
+
+    .bento-stat {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .bento-quote {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.7;
+      border-left: 4px solid var(--green);
+      padding-left: 16px;
+    }
+
+    .bento-divider {
+      height: 4px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    @media (max-width: 680px) {
+      .bento { grid-template-columns: 1fr; }
+      .bento-wide  { grid-column: span 1; }
+      .bento-tall  { grid-row: span 1; }
     }
 
     /* ── PRAYER (RPG DIALOGUE BOX) ── */
@@ -729,6 +773,120 @@
       letter-spacing: 0.1em;
     }
 
+    /* ── ART GALLERY ── */
+    #gallery { position: relative; z-index: 1; }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 32px;
+      padding: 0 0 16px;
+    }
+
+    .gallery-card {
+      background: var(--surf2);
+      display: flex;
+      flex-direction: column;
+      cursor: default;
+      transition: transform 0s;
+    }
+    .gallery-card:hover { transform: translate(-4px, -4px); }
+    .gallery-card:hover .gallery-frame { filter: brightness(1.1); }
+
+    .gallery-frame {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: #1b1224;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-size: 4rem;
+      line-height: 1.15;
+      letter-spacing: 2px;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      image-rendering: pixelated;
+      /* inner canvas border */
+      box-shadow: inset 0 0 0 8px rgba(0,0,0,0.5), inset 0 0 0 12px rgba(255,255,255,0.07);
+    }
+
+    /* aged canvas texture overlay */
+    .gallery-frame::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px),
+        repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px);
+      pointer-events: none;
+    }
+
+    .gallery-frame .painting-emoji {
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.6));
+      image-rendering: pixelated;
+    }
+
+    .gallery-frame .painting-label {
+      position: absolute;
+      bottom: 8px;
+      right: 10px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.28rem;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.1em;
+    }
+
+    .gallery-caption {
+      padding: 14px 16px 16px;
+      border-top: 3px solid rgba(255,255,255,0.08);
+    }
+
+    .gallery-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.48rem;
+      color: var(--yellow);
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+      line-height: 1.6;
+    }
+
+    .gallery-original {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 6px;
+      font-style: italic;
+    }
+
+    .gallery-desc {
+      font-size: 1rem;
+      color: #aaa;
+      line-height: 1.4;
+    }
+
+    .gallery-number {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.3rem;
+      color: #444;
+      margin-top: 8px;
+      letter-spacing: 0.12em;
+    }
+
+    /* museum placard beneath section title */
+    .museum-placard {
+      background: var(--surf);
+      border-left: 4px solid var(--yellow);
+      padding: 16px 24px;
+      margin-bottom: 40px;
+      font-size: 1.1rem;
+      color: #999;
+      line-height: 1.6;
+    }
+    .museum-placard strong { color: var(--yellow); font-style: normal; }
+
     /* ── FOOTER ── */
     footer {
       position: relative;
@@ -805,6 +963,135 @@
     @keyframes px-float {
       0%   { opacity: 1; transform: translateY(0); }
       100% { opacity: 0; transform: translateY(-96px); }
+    }
+
+    /* ── HALL OF SHAME ── */
+    #shame { background: var(--surf); }
+
+    .shame-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+
+    .wanted-card {
+      background: #f5f0dc;
+      border: 4px solid #000;
+      box-shadow: 6px 6px 0 #000;
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #000;
+    }
+
+    .wanted-header {
+      background: #000;
+      color: #f5f0dc;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.45rem;
+      letter-spacing: 0.15em;
+      padding: 8px 0;
+      width: 100%;
+      text-align: center;
+    }
+
+    .wanted-photo {
+      background: #e8e0c8;
+      width: 100%;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 52px;
+      border-top: 3px solid #000;
+      border-bottom: 3px solid #000;
+    }
+
+    .wanted-name {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.4rem;
+      color: #000;
+      letter-spacing: 0.08em;
+      text-align: center;
+      padding: 10px 8px 4px;
+      line-height: 1.7;
+    }
+
+    .wanted-crime {
+      font-family: 'VT323', monospace;
+      font-size: 0.95rem;
+      color: #444;
+      text-align: center;
+      padding: 4px 10px 14px;
+      line-height: 1.4;
+    }
+
+    .wanted-reward {
+      background: #000;
+      color: #f5c948;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.4rem;
+      letter-spacing: 0.1em;
+      padding: 7px 0;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* ── GLOSSARY ── */
+    #glossary { background: var(--bg); }
+
+    .glossary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      border: 4px solid var(--white);
+    }
+
+    .gloss-item {
+      padding: 28px 32px;
+      border-bottom: 4px solid rgba(255,255,255,0.1);
+      border-right: 4px solid rgba(255,255,255,0.1);
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 20px;
+      align-items: start;
+      transition: background 0s;
+    }
+    .gloss-item:hover { background: var(--surf); }
+    .gloss-item:nth-child(even) { border-right: none; }
+    .gloss-item:nth-last-child(-n+2) { border-bottom: none; }
+
+    .gloss-term {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.55rem;
+      line-height: 1.7;
+      letter-spacing: 0.05em;
+    }
+    .gloss-term.t-yellow { color: var(--yellow); }
+    .gloss-term.t-green  { color: var(--green); }
+    .gloss-term.t-cyan   { color: var(--cyan); }
+    .gloss-term.t-pink   { color: var(--pink); }
+    .gloss-term.t-purple { color: var(--purple); }
+    .gloss-term.t-red    { color: var(--red); }
+    .gloss-term.t-orange { color: var(--orange); }
+    .gloss-term.t-blue   { color: var(--blue); }
+
+    .gloss-def {
+      font-size: 1.05rem;
+      color: #bbb;
+      line-height: 1.7;
+    }
+
+    .gloss-def strong { color: var(--white); font-weight: 700; }
+
+    @media (max-width: 680px) {
+      .shame-grid { grid-template-columns: repeat(2, 1fr); }
+      .glossary-grid { grid-template-columns: 1fr; }
+      .gloss-item { grid-template-columns: 1fr; border-right: none; }
+      .gloss-item:nth-last-child(-n+2) { border-bottom: 4px solid rgba(255,255,255,0.1); }
+      .gloss-item:last-child { border-bottom: none; }
     }
 
     /* ── GAME ── */
@@ -885,9 +1172,12 @@
   <ul class="nav-links">
     <li><a href="#commandments">LAWS</a></li>
     <li><a href="#tierlist">TIERS</a></li>
-    <li><a href="#memes">SCRIPTURE</a></li>
+    <li><a href="#memes">WISDOM</a></li>
+    <li><a href="#shame">SHAME</a></li>
+    <li><a href="#glossary">GLOSSARY</a></li>
     <li><a href="#prayer">PRAYER</a></li>
     <li><a href="#game">GAME</a></li>
+    <li><a href="#gallery">GALLERY</a></li>
     <li><a href="#shrine">SHRINE</a></li>
   </ul>
   <button class="nav-btn" onclick="document.getElementById('shrine').scrollIntoView()">► PRAY</button>
@@ -902,7 +1192,7 @@
     <span class="line2">— THE ONE TRUE GRAIN —</span>
   </h1>
   <p class="hero-desc">
-    100% flour. <span class="hi">No cap.</span> We have commandments, a tier list,
+    100% flour. <span class="hi">No exceptions.</span> We have commandments, a tier list,
     and an unwavering belief that pre-sliced white bread is a war crime.
     All are welcome. Except those who squeeze the loaf at the store.
   </p>
@@ -917,7 +1207,7 @@
     </div>
     <div class="stat-box">
       <span class="stat-val sv-green">100%</span>
-      <span class="stat-lbl">GLUTEN FULL</span>
+      <span class="stat-lbl">PROPERLY PROVED</span>
     </div>
   </div>
   <div class="hero-actions">
@@ -930,19 +1220,19 @@
 <div class="ticker">
   <div class="ticker-track">
     <span>BREAD IS LIFE</span><span>·</span>
-    <span>LOAF GANG</span><span>·</span>
     <span>RESPECT THE CRUMB STRUCTURE</span><span>·</span>
     <span>THE HEEL IS SACRED</span><span>·</span>
     <span>PRE-SLICED IS A WAR CRIME</span><span>·</span>
     <span>IN CRUST WE TRUST</span><span>·</span>
     <span>THE MAILLARD REACTION IS DIVINE</span><span>·</span>
+    <span>BUTTER WHILE WARM OR NOT AT ALL</span><span>·</span>
     <span>BREAD IS LIFE</span><span>·</span>
-    <span>LOAF GANG</span><span>·</span>
     <span>RESPECT THE CRUMB STRUCTURE</span><span>·</span>
     <span>THE HEEL IS SACRED</span><span>·</span>
     <span>PRE-SLICED IS A WAR CRIME</span><span>·</span>
     <span>IN CRUST WE TRUST</span><span>·</span>
     <span>THE MAILLARD REACTION IS DIVINE</span><span>·</span>
+    <span>BUTTER WHILE WARM OR NOT AT ALL</span><span>·</span>
   </div>
 </div>
 
@@ -996,23 +1286,197 @@
 
 <div class="px-divider"></div>
 
-<!-- MEMES -->
+<!-- WISDOM -->
 <div id="memes">
   <div class="section">
     <div class="section-header">
       <div>
-        <span class="section-tag tag-green">😂 HOLY SCRIPTURE</span>
-        <h2 class="section-title">SACRED MEME<br>GALLERY</h2>
+        <span class="section-tag tag-green">📖 BREAD WISDOM</span>
+        <h2 class="section-title">WORDS FROM<br>THE OVEN</h2>
       </div>
-      <p class="section-desc">These images have been blessed, peer-reviewed, and approved by the Bread Church Council. They are not jokes. They are prophecy.</p>
+      <p class="section-desc">Observations, hard-won truths, and documented incidents from the frontlines of baking. Study them carefully.</p>
     </div>
-    <div class="meme-grid">
-      <div class="meme-card"><div class="meme-visual">🍞<span class="meme-label top">ME: I'LL JUST HAVE</span><span class="meme-label bottom">ONE SLICE</span></div><div class="meme-footer">*eats the entire loaf standing at the counter*</div></div>
-      <div class="meme-card"><div class="meme-visual">😤<span class="meme-label top">SOMEONE SQUEEZES</span><span class="meme-label bottom">THE LOAF</span></div><div class="meme-footer">you have been permanently banned from the bakery</div></div>
-      <div class="meme-card"><div class="meme-visual">🦠<span class="meme-label top">MY SOURDOUGH</span><span class="meme-label bottom">STARTER:</span></div><div class="meme-footer">it has a name, a birthday, and a lawyer</div></div>
-      <div class="meme-card"><div class="meme-visual">🥗<span class="meme-label top">DIET STARTS</span><span class="meme-label bottom">MONDAY</span></div><div class="meme-footer">it is Monday. we are at Bread Church.</div></div>
-      <div class="meme-card"><div class="meme-visual">😇<span class="meme-label top">THE CRUST IS</span><span class="meme-label bottom">PERFECT</span></div><div class="meme-footer">this is what peak human achievement looks like</div></div>
-      <div class="meme-card"><div class="meme-visual">😭<span class="meme-label top">STORING BREAD</span><span class="meme-label bottom">IN THE FRIDGE</span></div><div class="meme-footer">you will not be admitted to heaven</div></div>
+    <div class="bento">
+
+      <!-- Wide quote card -->
+      <div class="bento-card bento-wide bento-accent-green">
+        <div class="bento-eyebrow green">FIELD OBSERVATION</div>
+        <p class="bento-quote">"A person who stores bread in the fridge has never truly loved anything."</p>
+        <div class="bento-body">— Elder Thomas, 34 years of baking, retired in disgust</div>
+      </div>
+
+      <!-- Stat card -->
+      <div class="bento-card bento-accent-yellow">
+        <div class="bento-eyebrow yellow">DOCUMENTED STATISTIC</div>
+        <div class="bento-stat" style="color:var(--yellow)">94%</div>
+        <div class="bento-body">of people who say they "don't like the crust" have simply never had good bread. The other 6% are beyond help.</div>
+      </div>
+
+      <!-- Tall incident report -->
+      <div class="bento-card bento-tall bento-accent-pink">
+        <div>
+          <div class="bento-eyebrow pink">INCIDENT REPORT #47</div>
+          <div class="bento-headline">THE BAKERY SQUEEZER</div>
+        </div>
+        <div class="bento-divider"></div>
+        <div class="bento-body">
+          At 11:04am, a civilian was observed pressing their thumb into a fresh sourdough loaf at Aisle 3.<br><br>
+          They looked around to see if anyone noticed.<br><br>
+          Someone noticed.<br><br>
+          They always notice.
+        </div>
+        <div class="bento-eyebrow pink" style="margin-bottom:0">STATUS: BANNED</div>
+      </div>
+
+      <!-- Small fact -->
+      <div class="bento-card bento-accent-cyan">
+        <div class="bento-icon">🦠</div>
+        <div class="bento-eyebrow cyan">KNOWN FACT</div>
+        <div class="bento-body">Your sourdough starter is older than most of your friendships and considerably more reliable.</div>
+      </div>
+
+      <!-- Wide observation -->
+      <div class="bento-card bento-wide bento-accent-purple">
+        <div class="bento-eyebrow purple">PHILOSOPHICAL INQUIRY</div>
+        <div class="bento-headline">If you eat the heel, you are strong. If you throw away the heel, you are a coward. If you give the heel to someone you dislike, you are a tactician.</div>
+      </div>
+
+      <!-- Stat card -->
+      <div class="bento-card bento-accent-red">
+        <div class="bento-eyebrow red">CLINICAL FINDING</div>
+        <div class="bento-stat" style="color:var(--red)">0°C</div>
+        <div class="bento-body">The temperature at which the fridge murders bread. Do not be complicit in this.</div>
+      </div>
+
+      <!-- Quote card -->
+      <div class="bento-card bento-accent-yellow">
+        <div class="bento-icon">🧈</div>
+        <div class="bento-eyebrow yellow">ETERNAL TRUTH</div>
+        <div class="bento-body">Butter on warm bread is not breakfast. It is a spiritual experience. Plan your mornings accordingly.</div>
+      </div>
+
+      <!-- Wide dark card -->
+      <div class="bento-card bento-wide bento-accent-cyan">
+        <div class="bento-eyebrow cyan">OVERHEARD AT THE BAKERY</div>
+        <p class="bento-quote" style="border-color:var(--cyan)">"Could I get that sliced?" — A person who made a choice they cannot take back.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="px-divider"></div>
+
+<!-- HALL OF SHAME -->
+<div id="shame">
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <span class="section-tag tag-red">⚠️ MOST WANTED</span>
+        <h2 class="section-title">HALL OF<br>SHAME</h2>
+      </div>
+      <p class="section-desc">These individuals have committed documented offences against bread. Their names are known. Their crimes are recorded. They remain at large.</p>
+    </div>
+    <div class="shame-grid">
+
+      <div class="wanted-card">
+        <div class="wanted-header">WANTED</div>
+        <div class="wanted-photo">🧊</div>
+        <div class="wanted-name">THE FRIDGE<br>STORER</div>
+        <div class="wanted-crime">Stores fresh bread in the refrigerator. Claims it "stays fresh longer." It does not.</div>
+        <div class="wanted-reward">REWARD: NONE</div>
+      </div>
+
+      <div class="wanted-card">
+        <div class="wanted-header">WANTED</div>
+        <div class="wanted-photo">🤜</div>
+        <div class="wanted-name">THE LOAF<br>SQUEEZER</div>
+        <div class="wanted-crime">Squeezes every loaf at the store. Is apparently testing something. We do not know what.</div>
+        <div class="wanted-reward">REWARD: NONE</div>
+      </div>
+
+      <div class="wanted-card">
+        <div class="wanted-header">WANTED</div>
+        <div class="wanted-photo">✂️</div>
+        <div class="wanted-name">THE CRUST<br>REMOVER</div>
+        <div class="wanted-crime">Cuts the crust from every slice. Has done this since childhood. Has not grown since childhood.</div>
+        <div class="wanted-reward">REWARD: NONE</div>
+      </div>
+
+      <div class="wanted-card">
+        <div class="wanted-header">WANTED</div>
+        <div class="wanted-photo">🗑️</div>
+        <div class="wanted-name">THE HEEL<br>DISCARDE</div>
+        <div class="wanted-crime">Throws away the heel. Every time. Without remorse. The heel did nothing wrong.</div>
+        <div class="wanted-reward">REWARD: NONE</div>
+      </div>
+
+      <div class="wanted-card">
+        <div class="wanted-header">WANTED</div>
+        <div class="wanted-photo">🧱</div>
+        <div class="wanted-name">THE DENSE<br>LOAF BAKER</div>
+        <div class="wanted-crime">Did not let the dough prove. Said they "didn't have time." They had time. They chose not to use it.</div>
+        <div class="wanted-reward">REWARD: NONE</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="px-divider"></div>
+
+<!-- SACRED GLOSSARY -->
+<div id="glossary">
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <span class="section-tag tag-blue">📚 SACRED TERMINOLOGY</span>
+        <h2 class="section-title">THE BREAD<br>GLOSSARY</h2>
+      </div>
+      <p class="section-desc">Words you must know. Terms you must understand. Language shared between those who take this seriously, and those who should.</p>
+    </div>
+    <div class="glossary-grid">
+
+      <div class="gloss-item">
+        <span class="gloss-term t-yellow">CRUMB</span>
+        <span class="gloss-def">The interior structure of a loaf. Judged by its openness, its consistency, and the quiet confidence it projects. <strong>An even, open crumb is the goal of a well-lived life.</strong></span>
+      </div>
+
+      <div class="gloss-item">
+        <span class="gloss-term t-green">CRUST</span>
+        <span class="gloss-def">The outer shell. Sacred. Non-negotiable. The crust is not the problem. <strong>You are the problem.</strong> Learn to love it.</span>
+      </div>
+
+      <div class="gloss-item">
+        <span class="gloss-term t-cyan">STARTER</span>
+        <span class="gloss-def">A live culture of wild yeast and bacteria. It requires regular feeding. It has moods. It has preferences. <strong>Name it. Respect it. Do not neglect it.</strong></span>
+      </div>
+
+      <div class="gloss-item">
+        <span class="gloss-term t-pink">PROVING</span>
+        <span class="gloss-def">The resting phase in which dough rises. This takes time. <strong>That is the point.</strong> Impatience at this stage produces a dense, joyless loaf that reflects its maker.</span>
+      </div>
+
+      <div class="gloss-item">
+        <span class="gloss-term t-purple">SCORING</span>
+        <span class="gloss-def">The cuts made across the surface before baking. They control how the loaf expands. <strong>Score with a single, decisive motion.</strong> Hesitation is visible in the final product.</span>
+      </div>
+
+      <div class="gloss-item">
+        <span class="gloss-term t-red">THE HEEL</span>
+        <span class="gloss-def">The end piece of a loaf. Frequently discarded. Deeply misunderstood. <strong>The heel is the crust at its most concentrated.</strong> Eating it is an act of respect.</span>
+      </div>
+
+      <div class="gloss-item">
+        <span class="gloss-term t-orange">HYDRATION</span>
+        <span class="gloss-def">The ratio of water to flour. Higher hydration yields a more open crumb and a more difficult dough. <strong>It is also a philosophy.</strong> How much difficulty are you willing to handle for a better result?</span>
+      </div>
+
+      <div class="gloss-item">
+        <span class="gloss-term t-blue">MAILLARD</span>
+        <span class="gloss-def">The chemical reaction between amino acids and sugars that produces the golden crust and complex flavour during baking. <strong>It is science. It is also divine.</strong> These are not contradictory.</span>
+      </div>
+
     </div>
   </div>
 </div>
@@ -1078,6 +1542,134 @@
           <button id="go-btn" class="px-btn px-btn-yellow">► START GAME ◄</button>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="px-divider"></div>
+
+<!-- ART GALLERY -->
+<div id="gallery">
+  <div class="section">
+    <span class="section-tag tag-purple">🖼️ THE BREAD ARTS</span>
+    <h2 class="section-title">MASTERS OF THE<br>LOAF</h2>
+    <div class="museum-placard">
+      The <strong>Bread Church Museum of Fine Arts</strong> is pleased to present this permanent collection of canonical masterworks, each meticulously restored to reflect the true subject the artist originally intended. Historians have confirmed none of this.
+    </div>
+    <div class="gallery-grid">
+
+      <!-- 1 -->
+      <div class="gallery-card px-box-yellow">
+        <div class="gallery-frame" style="background:linear-gradient(160deg,#2a1a0e 0%,#1a1000 100%);">
+          <div class="painting-emoji">🍞<br>👩‍🎨</div>
+          <span class="painting-label">BC · OIL ON DOUGH</span>
+        </div>
+        <div class="gallery-caption">
+          <div class="gallery-title">THE LOAFNA LISA</div>
+          <div class="gallery-original">After: Leonardo da Vinci, c.1503</div>
+          <div class="gallery-desc">She holds no flower. She holds a warm, correctly proved sourdough. Her expression suggests she knows exactly what you did to your bread knife.</div>
+          <div class="gallery-number">CAT. NO. 001 · FLORENCE BREAD MUSEUM</div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="gallery-card px-box-blue">
+        <div class="gallery-frame" style="background:linear-gradient(180deg,#0a1628 0%,#1a0a00 100%);">
+          <div class="painting-emoji">🍞🍞🍞🍞🍞<br>👥👥👥👥👥<br>🥖🥐🫓🧁🥨</div>
+          <span class="painting-label">AD · FRESCO ON WHEAT</span>
+        </div>
+        <div class="gallery-caption">
+          <div class="gallery-title">THE LAST LOAF</div>
+          <div class="gallery-original">After: Leonardo da Vinci, c.1498</div>
+          <div class="gallery-desc">Thirteen disciples. Thirteen portions. The heel was placed in the center as a test of character. Only one reached for it without shame.</div>
+          <div class="gallery-number">CAT. NO. 002 · MILAN LOAF REFECTORY</div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="gallery-card px-box-pink">
+        <div class="gallery-frame" style="background:linear-gradient(135deg,#0d1a2e 0%,#1a0d0d 100%);">
+          <div class="painting-emoji" style="font-size:3.5rem;">👧<br>🌾<br>🍞</div>
+          <span class="painting-label">C.1665 · GRAIN ON CANVAS</span>
+        </div>
+        <div class="gallery-caption">
+          <div class="gallery-title">GIRL WITH A<br>SOURDOUGH EARRING</div>
+          <div class="gallery-original">After: Johannes Vermeer, c.1665</div>
+          <div class="gallery-desc">She is not wearing a pearl. The item in question is a perfectly round bread roll, still warm, which she has been wearing since Tuesday. No one has questioned this.</div>
+          <div class="gallery-number">CAT. NO. 003 · THE HAGUE GRAIN MUSEUM</div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="gallery-card px-box-cyan">
+        <div class="gallery-frame" style="background:linear-gradient(180deg,#001a2e 0%,#00112e 60%,#001a0a 100%);">
+          <div class="painting-emoji" style="font-size:3.2rem;">🌊🌊🌊<br>⛵🍞<br>🌊🌊🌊</div>
+          <span class="painting-label">1831 · WOODBLOCK ON RYE</span>
+        </div>
+        <div class="gallery-caption">
+          <div class="gallery-title">THE GREAT WAVE OF BAGUETTE</div>
+          <div class="gallery-original">After: Katsushika Hokusai, c.1831</div>
+          <div class="gallery-desc">A lone baguette navigates the foam. Mount Fuji stands indifferent in the background. The wave itself is made entirely of sourdough starter, which explains the smell.</div>
+          <div class="gallery-number">CAT. NO. 004 · EDO BAKE PERIOD</div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="gallery-card px-box-orange">
+        <div class="gallery-frame" style="background:linear-gradient(160deg,#1a0a00 0%,#2a1400 100%);">
+          <div class="painting-emoji" style="font-size:3rem;">😱<br>🍞🍞<br>🌉</div>
+          <span class="painting-label">1893 · OIL ON CRUST</span>
+        </div>
+        <div class="gallery-caption">
+          <div class="gallery-title">THE SCREAM OF THE HEEL</div>
+          <div class="gallery-original">After: Edvard Munch, 1893</div>
+          <div class="gallery-desc">He has discovered that someone ate the entire loaf and left only the two heels in the bag. The sky turned that color on its own. The fjord did not help.</div>
+          <div class="gallery-number">CAT. NO. 005 · OSLO BREAD PANIC INSTITUTE</div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="gallery-card px-box-green">
+        <div class="gallery-frame" style="background:linear-gradient(160deg,#0a2a00 0%,#001a0a 100%);">
+          <div class="painting-emoji" style="font-size:3.5rem;">🕰️<br>🍞🍞🍞<br>🏜️</div>
+          <span class="painting-label">1931 · SURREALISM ON PUMPERNICKEL</span>
+        </div>
+        <div class="gallery-caption">
+          <div class="gallery-title">THE PERSISTENCE<br>OF PROVING</div>
+          <div class="gallery-original">After: Salvador Dalí, 1931</div>
+          <div class="gallery-desc">The loaves droop over the landscape, still proving. They have been proving for three days. The baker has gone home. The oven is cold. The dough remains optimistic.</div>
+          <div class="gallery-number">CAT. NO. 006 · CATALAN FERMENTATION GALLERY</div>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="gallery-card px-box-red">
+        <div class="gallery-frame" style="background:radial-gradient(ellipse at center,#1a0000 0%,#000 100%);">
+          <div class="painting-emoji" style="font-size:3.2rem;">🌻🌻<br>🌾🍞🌾<br>🌻🌻</div>
+          <span class="painting-label">1888 · OIL ON FLOUR SACK</span>
+        </div>
+        <div class="gallery-caption">
+          <div class="gallery-title">WHEAT FIELD WITH<br>FRESH LOAVES</div>
+          <div class="gallery-original">After: Vincent van Gogh, 1888</div>
+          <div class="gallery-desc">He painted twelve of these. Each one shows a different bread. Scholars believe he was very hungry. The crows in the original have been replaced with crumbs.</div>
+          <div class="gallery-number">CAT. NO. 007 · ARLES FLOUR MUSEUM</div>
+        </div>
+      </div>
+
+      <!-- 8 -->
+      <div class="gallery-card px-box-purple">
+        <div class="gallery-frame" style="background:linear-gradient(180deg,#100a1a 0%,#1a0a0a 100%);">
+          <div class="painting-emoji" style="font-size:3rem;">🍎🍞🥖<br>🫙🥐🧁<br>🍷🫓🌾</div>
+          <span class="painting-label">C.1640 · OIL ON RYE BOARD</span>
+        </div>
+        <div class="gallery-caption">
+          <div class="gallery-title">STILL LIFE WITH AN<br>ABUNDANCE OF BREAD</div>
+          <div class="gallery-original">After: Dutch Golden Age, c.1640</div>
+          <div class="gallery-desc">A fly is visible in the original. It has been replaced with a sesame seed. Everything else remains: the mortality, the symbolism, the inexplicable second loaf.</div>
+          <div class="gallery-number">CAT. NO. 008 · AMSTERDAM CRUST RIJKSMUSEUM</div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -1158,17 +1750,17 @@
     "THE BREAD HEARS YOU",
     "SMELLS LIKE FRESH SOURDOUGH IN HEAVEN",
     "A CRUMB HAS BEEN BLESSED IN YOUR NAME",
-    "THE LOAF IS PLEASED",
+    "THE LOAF IS PLEASED WITH YOUR DEVOTION",
     "GOLDEN CRUST BLESSINGS UPON YOU",
-    "THE OVEN OF FORTUNE IS PREHEATED FOR YOU",
+    "THE OVEN OF FORTUNE IS PREHEATED IN YOUR HONOUR",
     "ANOINTED WITH BUTTER AND FLAKY SALT",
-    "A WARM BAGUETTE AWAITS IN THE AFTERLIFE",
+    "A WARM BAGUETTE AWAITS YOU IN THE AFTERLIFE",
     "THE CRUST IS PERFECT. SO IS YOUR DESTINY.",
-    "HOLY MAILLARD — BREAD ACCEPTS",
+    "HOLY MAILLARD REACTION — BREAD ACCEPTS YOUR PRAYER",
     "YOUR CRUMB STRUCTURE IS OPEN. SPIRITUALLY.",
-    "NO CAP — YOUR HYDRATION RATIO IS BUILT DIFFERENT",
-    "WE ARE SO BAKED",
-    "BREAD SAID RIZZ ACTIVATED",
+    "THE DOUGH RISES. SO SHALL YOU.",
+    "YOUR STARTER HAS BEEN FED. YOU ARE FORGIVEN.",
+    "THE HEEL NODS IN SOLEMN APPROVAL.",
   ];
 
   const candles = ['🕯️🕯️🕯️','🕯️🕯️🕯️🕯️','🕯️🕯️🕯️🕯️🕯️','🕯️🕯️🕯️🕯️🕯️🕯️🕯️','🕯️🕯️🕯️🕯️🕯️🕯️🕯️🕯️🕯️🕯️'];
