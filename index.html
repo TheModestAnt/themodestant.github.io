@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BREAD CHURCH — 8BIT EDITION</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:     #0f0f1a;
+      --surf:   #1a1a2e;
+      --surf2:  #16213e;
+      --white:  #e8e8e8;
+      --yellow: #f7c948;
+      --red:    #e83030;
+      --green:  #3dd68c;
+      --blue:   #4daaff;
+      --purple: #c77dff;
+      --pink:   #ff6b9d;
+      --orange: #ff9533;
+      --cyan:   #00e5ff;
+      --px: 4px; /* pixel unit */
+    }
+
+    html { scroll-behavior: auto; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'VT323', monospace;
+      font-size: 20px;
+      overflow-x: hidden;
+      cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><text y='26' font-size='26'>🍞</text></svg>") 16 16, crosshair;
+      image-rendering: pixelated;
+    }
+
+    /* ── CRT OVERLAY ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.08) 2px,
+        rgba(0,0,0,0.08) 4px
+      );
+    }
+
+    /* ── PIXEL BORDER MIXIN via class ── */
+    .px-box {
+      border: 4px solid var(--white);
+      box-shadow:
+        -4px 0 0 var(--bg),
+         4px 0 0 var(--bg),
+         0 -4px 0 var(--bg),
+         0  4px 0 var(--bg),
+        -8px 0 0 var(--white),
+         8px 0 0 var(--white),
+         0 -8px 0 var(--white),
+         0  8px 0 var(--white);
+      image-rendering: pixelated;
+    }
+
+    .px-box-yellow { border-color: var(--yellow); box-shadow: -4px 0 0 var(--bg), 4px 0 0 var(--bg), 0 -4px 0 var(--bg), 0 4px 0 var(--bg), -8px 0 0 var(--yellow), 8px 0 0 var(--yellow), 0 -8px 0 var(--yellow), 0 8px 0 var(--yellow); }
+    .px-box-red    { border-color: var(--red);    box-shadow: -4px 0 0 var(--bg), 4px 0 0 var(--bg), 0 -4px 0 var(--bg), 0 4px 0 var(--bg), -8px 0 0 var(--red),    8px 0 0 var(--red),    0 -8px 0 var(--red),    0 8px 0 var(--red);    }
+    .px-box-green  { border-color: var(--green);  box-shadow: -4px 0 0 var(--bg), 4px 0 0 var(--bg), 0 -4px 0 var(--bg), 0 4px 0 var(--bg), -8px 0 0 var(--green),  8px 0 0 var(--green),  0 -8px 0 var(--green),  0 8px 0 var(--green);  }
+    .px-box-blue   { border-color: var(--blue);   box-shadow: -4px 0 0 var(--bg), 4px 0 0 var(--bg), 0 -4px 0 var(--bg), 0 4px 0 var(--bg), -8px 0 0 var(--blue),   8px 0 0 var(--blue),   0 -8px 0 var(--blue),   0 8px 0 var(--blue);   }
+    .px-box-purple { border-color: var(--purple); box-shadow: -4px 0 0 var(--bg), 4px 0 0 var(--bg), 0 -4px 0 var(--bg), 0 4px 0 var(--bg), -8px 0 0 var(--purple), 8px 0 0 var(--purple), 0 -8px 0 var(--purple), 0 8px 0 var(--purple); }
+    .px-box-pink   { border-color: var(--pink);   box-shadow: -4px 0 0 var(--bg), 4px 0 0 var(--bg), 0 -4px 0 var(--bg), 0 4px 0 var(--bg), -8px 0 0 var(--pink),   8px 0 0 var(--pink),   0 -8px 0 var(--pink),   0 8px 0 var(--pink);   }
+    .px-box-cyan   { border-color: var(--cyan);   box-shadow: -4px 0 0 var(--bg), 4px 0 0 var(--bg), 0 -4px 0 var(--bg), 0 4px 0 var(--bg), -8px 0 0 var(--cyan),   8px 0 0 var(--cyan),   0 -8px 0 var(--cyan),   0 8px 0 var(--cyan);   }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 200;
+      height: 56px;
+      background: var(--surf);
+      border-bottom: 4px solid var(--yellow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      image-rendering: pixelated;
+    }
+
+    .nav-brand {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.7rem;
+      color: var(--yellow);
+      letter-spacing: 0.05em;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.45rem;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0s;
+    }
+    .nav-links a:hover { color: var(--yellow); }
+
+    .nav-btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.45rem;
+      padding: 8px 14px;
+      background: var(--yellow);
+      color: #000;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      box-shadow: 4px 4px 0 #000;
+      transition: box-shadow 0s, transform 0s;
+    }
+    .nav-btn:hover { box-shadow: 2px 2px 0 #000; transform: translate(2px,2px); }
+    .nav-btn:active { box-shadow: 0 0 0 #000; transform: translate(4px,4px); }
+
+    /* ── STAR BG ── */
+    .stars {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .star {
+      position: absolute;
+      background: var(--white);
+      image-rendering: pixelated;
+      animation: blink-star 2s steps(1) infinite;
+    }
+
+    @keyframes blink-star {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    /* ── PIXEL TITLE SCREEN ── */
+    .title-screen {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      padding-top: 56px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-left: 24px;
+      padding-right: 24px;
+      gap: 32px;
+    }
+
+    .press-start-label {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.6rem;
+      color: var(--yellow);
+      letter-spacing: 0.15em;
+      animation: blink 1s steps(1) infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .pixel-burger-sprite {
+      font-size: 96px;
+      line-height: 1;
+      display: block;
+      animation: pixel-bounce 0.6s steps(2) infinite;
+      image-rendering: pixelated;
+      filter: drop-shadow(4px 4px 0 rgba(0,0,0,0.8));
+    }
+    @keyframes pixel-bounce {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+
+    .game-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(1.4rem, 5vw, 3rem);
+      line-height: 1.4;
+      letter-spacing: 0.06em;
+      color: var(--yellow);
+      text-shadow:
+        4px 4px 0 #b88a00,
+        8px 8px 0 rgba(0,0,0,0.5);
+    }
+
+    .game-title .line2 {
+      display: block;
+      color: var(--white);
+      font-size: clamp(0.9rem, 3vw, 1.6rem);
+      margin-top: 12px;
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.6);
+    }
+
+    .hero-desc {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: #aaa;
+      max-width: 580px;
+      line-height: 1.6;
+    }
+
+    .hero-desc .hi { color: var(--yellow); }
+
+    /* PIXEL STATS ROW */
+    .stat-row {
+      display: flex;
+      gap: 0;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 8px;
+    }
+
+    .stat-box {
+      background: var(--surf);
+      border: 4px solid var(--white);
+      padding: 16px 28px;
+      text-align: center;
+      min-width: 120px;
+    }
+
+    .stat-box + .stat-box { border-left: 0; }
+
+    .stat-val {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 1.1rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .stat-lbl {
+      font-size: 0.75rem;
+      color: #888;
+    }
+
+    .sv-yellow { color: var(--yellow); }
+    .sv-red    { color: var(--red); }
+    .sv-green  { color: var(--green); }
+
+    .hero-actions {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .px-btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.55rem;
+      padding: 14px 24px;
+      letter-spacing: 0.05em;
+      border: none;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 #000;
+      text-decoration: none;
+      display: inline-block;
+      transition: none;
+    }
+    .px-btn:hover { box-shadow: 2px 2px 0 #000; transform: translate(2px,2px); }
+    .px-btn:active { box-shadow: 0 0 0 #000; transform: translate(4px,4px); }
+    .px-btn-yellow { background: var(--yellow); color: #000; }
+    .px-btn-ghost  { background: transparent; color: var(--white); border: 4px solid var(--white); box-shadow: 4px 4px 0 #000; }
+
+    /* ── TICKER ── */
+    .ticker {
+      position: relative;
+      z-index: 1;
+      background: var(--yellow);
+      border-top: 4px solid #000;
+      border-bottom: 4px solid #000;
+      overflow: hidden;
+      padding: 10px 0;
+    }
+    .ticker-track {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scroll-l 24s linear infinite;
+    }
+    .ticker-track span {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.55rem;
+      color: #000;
+      letter-spacing: 0.1em;
+      padding: 0 32px;
+    }
+    @keyframes scroll-l { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ── SECTIONS ── */
+    .section {
+      position: relative;
+      z-index: 1;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    .section-tag {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.12em;
+      display: inline-block;
+      padding: 6px 12px;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+
+    .tag-yellow { background: var(--yellow); color: #000; }
+    .tag-red    { background: var(--red);    color: #fff; }
+    .tag-green  { background: var(--green);  color: #000; }
+    .tag-blue   { background: var(--blue);   color: #000; }
+    .tag-purple { background: var(--purple); color: #000; }
+    .tag-pink   { background: var(--pink);   color: #fff; }
+    .tag-cyan   { background: var(--cyan);   color: #000; }
+
+    .section-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(1rem, 3vw, 1.8rem);
+      line-height: 1.5;
+      letter-spacing: 0.05em;
+      margin-bottom: 40px;
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.6);
+    }
+
+    .section-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+      margin-bottom: 48px;
+    }
+
+    .section-desc {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #aaa;
+      padding-top: 8px;
+    }
+
+    /* ── DIVIDER ── */
+    .px-divider {
+      height: 8px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--yellow) 0 40px, var(--orange) 40px 80px,
+        var(--red) 80px 120px, var(--pink) 120px 160px,
+        var(--purple) 160px 200px, var(--blue) 200px 240px,
+        var(--cyan) 240px 280px, var(--green) 280px 320px
+      );
+      border-top: 4px solid #000;
+      border-bottom: 4px solid #000;
+      image-rendering: pixelated;
+    }
+
+    /* ── COMMANDMENTS ── */
+    #commandments { background: var(--surf); }
+
+    .cmd-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .cmd-item {
+      display: grid;
+      grid-template-columns: 60px 1fr 40px;
+      gap: 20px;
+      align-items: center;
+      padding: 20px 16px;
+      border-bottom: 4px solid rgba(255,255,255,0.08);
+      transition: background 0s;
+    }
+    .cmd-item:first-child { border-top: 4px solid rgba(255,255,255,0.08); }
+    .cmd-item:hover { background: rgba(247,201,72,0.08); }
+
+    .cmd-num {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.7rem;
+      color: var(--yellow);
+      text-align: center;
+    }
+
+    .cmd-text {
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: var(--white);
+    }
+
+    .cmd-icon { font-size: 1.4rem; text-align: center; }
+
+    /* ── TIER LIST ── */
+    #tierlist { background: var(--bg); }
+
+    .tier-table {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 4px solid var(--white);
+    }
+
+    .tier-row {
+      display: flex;
+      align-items: stretch;
+      border-bottom: 4px solid rgba(255,255,255,0.15);
+    }
+    .tier-row:last-child { border-bottom: none; }
+
+    .tier-letter {
+      width: 72px;
+      min-width: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 1.5rem;
+      border-right: 4px solid rgba(0,0,0,0.3);
+    }
+
+    .s .tier-letter { background: #ff7f7f; color: #000; }
+    .a .tier-letter { background: #ffb347; color: #000; }
+    .b .tier-letter { background: #ffdf6b; color: #000; }
+    .c .tier-letter { background: #77dd77; color: #000; }
+    .d .tier-letter { background: #6ec6ff; color: #000; }
+    .f .tier-letter { background: #c57bff; color: #000; }
+
+    .tier-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 14px 18px;
+      background: var(--surf);
+      flex: 1;
+      align-items: center;
+    }
+
+    .tier-chip {
+      background: var(--bg);
+      border: 3px solid rgba(255,255,255,0.2);
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      color: var(--white);
+    }
+
+    /* ── MEMES ── */
+    #memes { background: var(--surf2); }
+
+    .meme-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .meme-card {
+      background: var(--bg);
+      border: 4px solid var(--white);
+      box-shadow: 6px 6px 0 #000;
+      overflow: hidden;
+      transition: none;
+    }
+    .meme-card:hover { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 #000; }
+
+    .meme-visual {
+      height: 160px;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 72px;
+      position: relative;
+      border-bottom: 4px solid var(--white);
+    }
+
+    .meme-label {
+      position: absolute;
+      left: 0; right: 0;
+      text-align: center;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.48rem;
+      color: #fff;
+      text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+      padding: 0 8px;
+      letter-spacing: 0.05em;
+      line-height: 1.5;
+    }
+    .meme-label.top    { top: 8px; }
+    .meme-label.bottom { bottom: 8px; }
+
+    .meme-footer {
+      padding: 12px 14px;
+      font-size: 0.85rem;
+      color: #aaa;
+    }
+
+    /* ── PRAYER (RPG DIALOGUE BOX) ── */
+    #prayer { background: var(--surf); }
+
+    .prayer-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 60px;
+    }
+
+    .prayer-meta .section-title { font-size: 1rem; }
+    .prayer-meta p { font-size: 1rem; line-height: 1.6; color: #aaa; }
+
+    .rpg-dialogue {
+      background: #0a0a1a;
+      border: 4px solid var(--cyan);
+      box-shadow: 6px 6px 0 #000, -4px 0 0 var(--bg), 4px 0 0 var(--bg), 0 -4px 0 var(--bg), 0 4px 0 var(--bg), -8px 0 0 var(--cyan), 8px 0 0 var(--cyan), 0 -8px 0 var(--cyan), 0 8px 0 var(--cyan);
+      padding: 36px 40px;
+      position: relative;
+    }
+
+    .rpg-name-tag {
+      position: absolute;
+      top: -20px; left: 20px;
+      background: var(--cyan);
+      color: #000;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.5rem;
+      padding: 5px 12px;
+      letter-spacing: 0.1em;
+    }
+
+    .rpg-cursor {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: var(--cyan);
+      margin-right: 8px;
+      vertical-align: middle;
+      animation: blink 0.8s steps(1) infinite;
+    }
+
+    .prayer-body {
+      font-size: 1.25rem;
+      line-height: 2;
+      color: #d0f0ff;
+    }
+
+    .prayer-amen {
+      display: block;
+      margin-top: 28px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.9rem;
+      color: var(--yellow);
+      letter-spacing: 0.15em;
+      text-shadow: 3px 3px 0 #000;
+    }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials { background: var(--bg); }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .testi-card {
+      background: var(--surf);
+      border: 4px solid var(--white);
+      box-shadow: 6px 6px 0 #000;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .testi-stars {
+      font-size: 1.1rem;
+      color: var(--yellow);
+      margin-bottom: 16px;
+      letter-spacing: 3px;
+    }
+
+    .testi-body {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #bbb;
+      flex: 1;
+      margin-bottom: 20px;
+    }
+
+    .testi-sep {
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      margin-bottom: 16px;
+    }
+
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .testi-avatar {
+      width: 44px;
+      height: 44px;
+      background: var(--bg);
+      border: 4px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      image-rendering: pixelated;
+    }
+
+    .testi-name {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.42rem;
+      color: var(--white);
+      line-height: 1.8;
+    }
+    .testi-role { font-size: 0.8rem; color: #777; margin-top: 4px; }
+
+    /* ── SHRINE (RPG BATTLE UI) ── */
+    #shrine { background: var(--surf); }
+
+    .shrine-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .shrine-left .section-title { margin-bottom: 16px; }
+    .shrine-left > p { font-size: 1.05rem; color: #aaa; line-height: 1.7; margin-bottom: 32px; }
+
+    .rpg-menu {
+      background: var(--bg);
+      border: 4px solid var(--green);
+      box-shadow: -4px 0 0 var(--bg), 4px 0 0 var(--bg), 0 -4px 0 var(--bg), 0 4px 0 var(--bg), -8px 0 0 var(--green), 8px 0 0 var(--green), 0 -8px 0 var(--green), 0 8px 0 var(--green);
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .rpg-menu-title {
+      background: var(--green);
+      color: #000;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.5rem;
+      padding: 10px 16px;
+      letter-spacing: 0.1em;
+    }
+
+    .rpg-menu-body {
+      padding: 24px 28px;
+    }
+
+    #candle-display {
+      display: block;
+      font-size: 1.6rem;
+      letter-spacing: 4px;
+      margin-bottom: 20px;
+      min-height: 2.2rem;
+    }
+
+    /* HP BAR */
+    .hp-label {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.42rem;
+      color: var(--green);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .hp-bar-track {
+      height: 16px;
+      background: #111;
+      border: 3px solid rgba(255,255,255,0.2);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .hp-bar-fill {
+      height: 100%;
+      background: var(--green);
+      width: 10%;
+      transition: width 0.3s steps(10);
+      image-rendering: pixelated;
+    }
+
+    #shrine-msg {
+      font-size: 1rem;
+      color: #aaa;
+      font-style: italic;
+      min-height: 1.5em;
+      line-height: 1.6;
+    }
+
+    #pray-btn {
+      display: block;
+      width: 100%;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.6rem;
+      padding: 16px 20px;
+      background: var(--yellow);
+      color: #000;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.08em;
+      box-shadow: 4px 4px 0 #000;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    #pray-btn:hover { box-shadow: 2px 2px 0 #000; transform: translate(2px,2px); }
+    #pray-btn:active { box-shadow: 0 0 0 #000; transform: translate(4px,4px); }
+
+    #prayer-count {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.42rem;
+      color: #777;
+      display: block;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: #000;
+      border-top: 8px solid var(--yellow);
+      padding: 40px;
+      text-align: center;
+    }
+
+    .footer-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.75rem;
+      color: var(--yellow);
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+      text-shadow: 2px 2px 0 #000;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .footer-links a {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.4rem;
+      color: #666;
+      text-decoration: none;
+      letter-spacing: 0.08em;
+    }
+    .footer-links a:hover { color: var(--white); }
+
+    .footer-copy {
+      font-size: 0.9rem;
+      color: #444;
+    }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed;
+      bottom: 32px; left: 50%;
+      transform: translateX(-50%) translateY(16px);
+      background: var(--yellow);
+      color: #000;
+      padding: 12px 24px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.08em;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.1s, transform 0.1s;
+      pointer-events: none;
+      box-shadow: 4px 4px 0 #000;
+      max-width: 320px;
+      text-align: center;
+      line-height: 1.7;
+      image-rendering: pixelated;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── FLOATER ── */
+    .floater {
+      position: fixed;
+      pointer-events: none;
+      font-size: 1.5rem;
+      z-index: 9998;
+      animation: px-float 1s steps(8) forwards;
+      image-rendering: pixelated;
+    }
+    @keyframes px-float {
+      0%   { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-96px); }
+    }
+
+    /* ── GAME ── */
+    #game { background: var(--surf2); }
+
+    .game-wrap { position: relative; }
+
+    .game-hud {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .game-hud-item {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.6rem;
+      color: var(--yellow);
+      letter-spacing: 0.08em;
+    }
+
+    #game-canvas {
+      display: block;
+      margin: 0 auto;
+      border: 4px solid var(--pink);
+      image-rendering: pixelated;
+      cursor: none;
+      max-width: 100%;
+    }
+
+    #game-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(10,10,26,0.88);
+      z-index: 10;
+    }
+
+    .game-overlay-inner {
+      padding: 40px 48px;
+      text-align: center;
+      max-width: 380px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      nav { padding: 0 16px; }
+      .nav-links { display: none; }
+      .section { padding: 60px 24px; }
+      .section-header { grid-template-columns: 1fr; }
+      .meme-grid { grid-template-columns: 1fr 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .prayer-layout { grid-template-columns: 1fr; }
+      .shrine-layout { grid-template-columns: 1fr; }
+      .stat-row { gap: 0; }
+      .stat-box { min-width: 100px; padding: 12px 18px; }
+      footer { padding: 32px 20px; }
+      .footer-links { flex-wrap: wrap; gap: 16px; }
+    }
+
+    @media (max-width: 500px) {
+      .meme-grid { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- STARS -->
+<div class="stars" id="stars"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">🍞 BREAD CHURCH</div>
+  <ul class="nav-links">
+    <li><a href="#commandments">LAWS</a></li>
+    <li><a href="#tierlist">TIERS</a></li>
+    <li><a href="#memes">SCRIPTURE</a></li>
+    <li><a href="#prayer">PRAYER</a></li>
+    <li><a href="#game">GAME</a></li>
+    <li><a href="#shrine">SHRINE</a></li>
+  </ul>
+  <button class="nav-btn" onclick="document.getElementById('shrine').scrollIntoView()">► PRAY</button>
+</nav>
+
+<!-- HERO / TITLE SCREEN -->
+<div class="title-screen">
+  <p class="press-start-label">▼ PRESS START TO WORSHIP ▼</p>
+  <span class="pixel-burger-sprite" id="hero-burger">🍞</span>
+  <h1 class="game-title">
+    BREAD CHURCH
+    <span class="line2">— THE ONE TRUE GRAIN —</span>
+  </h1>
+  <p class="hero-desc">
+    100% flour. <span class="hi">No cap.</span> We have commandments, a tier list,
+    and an unwavering belief that pre-sliced white bread is a war crime.
+    All are welcome. Except those who squeeze the loaf at the store.
+  </p>
+  <div class="stat-row">
+    <div class="stat-box">
+      <span class="stat-val sv-yellow">∞</span>
+      <span class="stat-lbl">LOAVES BLESSED</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-val sv-red">0</span>
+      <span class="stat-lbl">HEELS WASTED</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-val sv-green">100%</span>
+      <span class="stat-lbl">GLUTEN FULL</span>
+    </div>
+  </div>
+  <div class="hero-actions">
+    <a href="#commandments" class="px-btn px-btn-yellow">► READ THE COMMANDMENTS</a>
+    <a href="#shrine" class="px-btn px-btn-ghost">◆ OFFER A PRAYER</a>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span>BREAD IS LIFE</span><span>·</span>
+    <span>LOAF GANG</span><span>·</span>
+    <span>RESPECT THE CRUMB STRUCTURE</span><span>·</span>
+    <span>THE HEEL IS SACRED</span><span>·</span>
+    <span>PRE-SLICED IS A WAR CRIME</span><span>·</span>
+    <span>IN CRUST WE TRUST</span><span>·</span>
+    <span>THE MAILLARD REACTION IS DIVINE</span><span>·</span>
+    <span>BREAD IS LIFE</span><span>·</span>
+    <span>LOAF GANG</span><span>·</span>
+    <span>RESPECT THE CRUMB STRUCTURE</span><span>·</span>
+    <span>THE HEEL IS SACRED</span><span>·</span>
+    <span>PRE-SLICED IS A WAR CRIME</span><span>·</span>
+    <span>IN CRUST WE TRUST</span><span>·</span>
+    <span>THE MAILLARD REACTION IS DIVINE</span><span>·</span>
+  </div>
+</div>
+
+<!-- COMMANDMENTS -->
+<div id="commandments">
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <span class="section-tag tag-yellow">📜 SACRED LAW</span>
+        <h2 class="section-title">THE TEN<br>COMMANDMENTS</h2>
+      </div>
+      <p class="section-desc">These are not suggestions. These are not guidelines. These are binding, eternal truths handed down from the oven to the people. Violators will be left with only rice cakes.</p>
+    </div>
+    <div class="cmd-grid px-box px-box-yellow" style="background:var(--surf);">
+      <div class="cmd-item"><span class="cmd-num">01</span><span class="cmd-text">Never squeeze the loaf at the store. That is not a test. That is a crime.</span><span class="cmd-icon">🤜</span></div>
+      <div class="cmd-item"><span class="cmd-num">02</span><span class="cmd-text">The crust is sacred. Thou shalt not cut it off like a coward.</span><span class="cmd-icon">✂️</span></div>
+      <div class="cmd-item"><span class="cmd-num">03</span><span class="cmd-text">Thou shalt not buy pre-sliced sourdough. That crumb is already weeping. So am I.</span><span class="cmd-icon">😭</span></div>
+      <div class="cmd-item"><span class="cmd-num">04</span><span class="cmd-text">Butter must be applied while the bread is warm. Cold butter on cold bread is chaos.</span><span class="cmd-icon">🧈</span></div>
+      <div class="cmd-item"><span class="cmd-num">05</span><span class="cmd-text">The heel is not trash. It is the guardian of the loaf. Respect it or leave.</span><span class="cmd-icon">🍞</span></div>
+      <div class="cmd-item"><span class="cmd-num">06</span><span class="cmd-text">Thou shalt let dough prove for the full time. Impatience makes a dense, sad loaf.</span><span class="cmd-icon">⏱️</span></div>
+      <div class="cmd-item"><span class="cmd-num">07</span><span class="cmd-text">All sourdough starters are sacred. Name them. Feed them. Love them.</span><span class="cmd-icon">🦠</span></div>
+      <div class="cmd-item"><span class="cmd-num">08</span><span class="cmd-text">Thou shalt not store bread in the fridge. That is how hope dies.</span><span class="cmd-icon">❄️</span></div>
+      <div class="cmd-item"><span class="cmd-num">09</span><span class="cmd-text">Score the loaf with conviction. A weak score is a weak crumb. Be bolder.</span><span class="cmd-icon">🔪</span></div>
+      <div class="cmd-item"><span class="cmd-num">10</span><span class="cmd-text">Always say "this is the best bread I've ever had." Every single time. No exceptions.</span><span class="cmd-icon">🏆</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="px-divider"></div>
+
+<!-- TIER LIST -->
+<div id="tierlist">
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <span class="section-tag tag-red">📊 OFFICIAL RANKINGS</span>
+        <h2 class="section-title">THE OFFICIAL<br>TIER LIST</h2>
+      </div>
+      <p class="section-desc">Ranked by the Council of Elders after decades of rigorous field research, crumb analysis, and one life-changing bakery in a town they will not name.</p>
+    </div>
+    <div class="tier-table">
+      <div class="tier-row s"><div class="tier-letter">S</div><div class="tier-items"><span class="tier-chip">🥖 Fresh Baguette</span><span class="tier-chip">🍞 Homemade Sourdough</span><span class="tier-chip">🥐 Croissant</span><span class="tier-chip">🫓 Focaccia</span></div></div>
+      <div class="tier-row a"><div class="tier-letter">A</div><div class="tier-items"><span class="tier-chip">🍞 Rye Bread</span><span class="tier-chip">🥨 Pretzel Bread</span><span class="tier-chip">🫓 Ciabatta</span><span class="tier-chip">🧈 Brioche</span></div></div>
+      <div class="tier-row b"><div class="tier-letter">B</div><div class="tier-items"><span class="tier-chip">🫓 Pita Bread</span><span class="tier-chip">🍞 Whole Wheat Loaf</span><span class="tier-chip">🥯 Bagel</span></div></div>
+      <div class="tier-row c"><div class="tier-letter">C</div><div class="tier-items"><span class="tier-chip">🍞 White Sandwich Bread</span><span class="tier-chip">🥞 English Muffin</span><span class="tier-chip">🌮 Tortilla Wrap</span></div></div>
+      <div class="tier-row d"><div class="tier-letter">D</div><div class="tier-items"><span class="tier-chip">❄️ Frozen Bread Roll</span><span class="tier-chip">📦 Day-Old Loaf</span><span class="tier-chip">🧻 Stale Sliced Bread</span></div></div>
+      <div class="tier-row f"><div class="tier-letter">F</div><div class="tier-items"><span class="tier-chip">💀 Gluten-Free Brick</span><span class="tier-chip">🤡 Bread with Raisins (Unannounced)</span><span class="tier-chip">😭 Squeezed at the Store</span><span class="tier-chip">🚫 Rice Cake</span></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="px-divider"></div>
+
+<!-- MEMES -->
+<div id="memes">
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <span class="section-tag tag-green">😂 HOLY SCRIPTURE</span>
+        <h2 class="section-title">SACRED MEME<br>GALLERY</h2>
+      </div>
+      <p class="section-desc">These images have been blessed, peer-reviewed, and approved by the Bread Church Council. They are not jokes. They are prophecy.</p>
+    </div>
+    <div class="meme-grid">
+      <div class="meme-card"><div class="meme-visual">🍞<span class="meme-label top">ME: I'LL JUST HAVE</span><span class="meme-label bottom">ONE SLICE</span></div><div class="meme-footer">*eats the entire loaf standing at the counter*</div></div>
+      <div class="meme-card"><div class="meme-visual">😤<span class="meme-label top">SOMEONE SQUEEZES</span><span class="meme-label bottom">THE LOAF</span></div><div class="meme-footer">you have been permanently banned from the bakery</div></div>
+      <div class="meme-card"><div class="meme-visual">🦠<span class="meme-label top">MY SOURDOUGH</span><span class="meme-label bottom">STARTER:</span></div><div class="meme-footer">it has a name, a birthday, and a lawyer</div></div>
+      <div class="meme-card"><div class="meme-visual">🥗<span class="meme-label top">DIET STARTS</span><span class="meme-label bottom">MONDAY</span></div><div class="meme-footer">it is Monday. we are at Bread Church.</div></div>
+      <div class="meme-card"><div class="meme-visual">😇<span class="meme-label top">THE CRUST IS</span><span class="meme-label bottom">PERFECT</span></div><div class="meme-footer">this is what peak human achievement looks like</div></div>
+      <div class="meme-card"><div class="meme-visual">😭<span class="meme-label top">STORING BREAD</span><span class="meme-label bottom">IN THE FRIDGE</span></div><div class="meme-footer">you will not be admitted to heaven</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="px-divider"></div>
+
+<!-- PRAYER -->
+<div id="prayer">
+  <div class="section">
+    <div class="prayer-layout">
+      <div class="prayer-meta">
+        <span class="section-tag tag-cyan">🙏 NIGHTLY DEVOTION</span>
+        <h2 class="section-title">THE<br>EVENING<br>PRAYER</h2>
+        <p>Recite aloud before bed, or before slicing a fresh loaf. Both are sacred moments of clarity.</p>
+      </div>
+      <div class="rpg-dialogue">
+        <div class="rpg-name-tag">BREAD SPEAKS</div>
+        <p class="prayer-body">
+          <span class="rpg-cursor"></span>O Mighty Bread, who art in the oven,<br>
+          hallowed be thy crust.<br>
+          Thy crumb be open, thy rise be done,<br>
+          on stone as it is in heaven.<br>
+          Give us this day our daily loaf,<br>
+          and forgive us our fridge storage,<br>
+          as we forgive those who squeeze us at the store.<br>
+          Lead us not into pre-sliced,<br>
+          but deliver us from the rice cake.<br>
+          For thine is the flour, the yeast, and the glory,<br>
+          for ever and ever.
+        </p>
+        <span class="prayer-amen">🍞 &nbsp; A M E N &nbsp; 🍞</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="px-divider"></div>
+
+<!-- GAME -->
+<div id="game">
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <span class="section-tag tag-pink">🎮 HOLY ARCADE</span>
+        <h2 class="section-title">LOAF<br>CATCHER</h2>
+      </div>
+      <p class="section-desc">
+        Catch the sacred bread. Dodge the rice cakes. Use <strong style="color:var(--white)">← →</strong> arrow keys or <strong style="color:var(--white)">A D</strong> to move.<br><br>
+        Rice cakes cost a life. Running out of lives is a sin.
+      </p>
+    </div>
+    <div class="game-wrap px-box px-box-pink" style="background:var(--bg); text-align:center; padding:32px;">
+      <div class="game-hud">
+        <span class="game-hud-item">SCORE: <span id="g-score">0</span></span>
+        <span class="game-hud-item">BEST: <span id="g-best">0</span></span>
+        <span class="game-hud-item">LIVES: <span id="g-lives">❤️❤️❤️</span></span>
+      </div>
+      <canvas id="game-canvas"></canvas>
+      <div id="game-overlay">
+        <div class="game-overlay-inner px-box px-box-yellow" style="background:var(--surf);">
+          <div id="go-title" class="display" style="font-family:'Press Start 2P',monospace;font-size:1rem;color:var(--yellow);line-height:1.6;margin-bottom:16px;">LOAF CATCHER</div>
+          <div id="go-sub" style="font-size:1rem;color:#aaa;margin-bottom:24px;line-height:1.7;">Catch 🍞🥖🥐🫓 — avoid 🚫<br>← → or A D to move</div>
+          <button id="go-btn" class="px-btn px-btn-yellow">► START GAME ◄</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="px-divider"></div>
+
+<!-- SHRINE -->
+<div id="shrine">
+  <div class="section">
+    <div class="shrine-layout">
+      <div class="shrine-left">
+        <span class="section-tag tag-yellow">🕯️ THE SHRINE</span>
+        <h2 class="section-title">OFFER YOUR<br>PRAYER</h2>
+        <p>Press the button. The Bread is listening. It is always listening. Each prayer lights a candle.</p>
+        <button id="pray-btn">► PRAY TO THE BREAD ◄</button>
+        <span id="prayer-count">0 PRAYERS OFFERED</span>
+      </div>
+      <div class="rpg-menu">
+        <div class="rpg-menu-title">▸ SHRINE STATUS</div>
+        <div class="rpg-menu-body">
+          <span id="candle-display">🕯️🕯️🕯️</span>
+          <div class="hp-label">
+            <span>FAITH METER</span>
+            <span id="hp-val">0 / 30</span>
+          </div>
+          <div class="hp-bar-track">
+            <div class="hp-bar-fill" id="hp-bar"></div>
+          </div>
+          <p id="shrine-msg">The shrine awaits your devotion...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-title">🍞 BREAD CHURCH — OFFICIAL SITE 🍞</div>
+  <ul class="footer-links">
+    <li><a href="#commandments">COMMANDMENTS</a></li>
+    <li><a href="#tierlist">TIER LIST</a></li>
+    <li><a href="#memes">SCRIPTURE</a></li>
+    <li><a href="#shrine">SHRINE</a></li>
+  </ul>
+  <p class="footer-copy">IN CRUST WE TRUST · ALL ARE WELCOME · EXCEPT RICE CAKES · © BREAD CHURCH MMX</p>
+</footer>
+
+<div id="toast"></div>
+
+<script>
+  // ── PIXEL STARS ──
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 80; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() < 0.5 ? 2 : 4;
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top  = Math.random() * 100 + '%';
+    s.style.animationDelay = (Math.random() * 3) + 's';
+    s.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+    starsEl.appendChild(s);
+  }
+
+  // ── SHRINE ──
+  const prayBtn   = document.getElementById('pray-btn');
+  const countEl   = document.getElementById('prayer-count');
+  const candleEl  = document.getElementById('candle-display');
+  const shrineMsg = document.getElementById('shrine-msg');
+  const hpBar     = document.getElementById('hp-bar');
+  const hpVal     = document.getElementById('hp-val');
+  const toast     = document.getElementById('toast');
+  let prayCount   = 0;
+  const MAX_FAITH = 30;
+
+  const messages = [
+    "THE BREAD HEARS YOU",
+    "SMELLS LIKE FRESH SOURDOUGH IN HEAVEN",
+    "A CRUMB HAS BEEN BLESSED IN YOUR NAME",
+    "THE LOAF IS PLEASED",
+    "GOLDEN CRUST BLESSINGS UPON YOU",
+    "THE OVEN OF FORTUNE IS PREHEATED FOR YOU",
+    "ANOINTED WITH BUTTER AND FLAKY SALT",
+    "A WARM BAGUETTE AWAITS IN THE AFTERLIFE",
+    "THE CRUST IS PERFECT. SO IS YOUR DESTINY.",
+    "HOLY MAILLARD — BREAD ACCEPTS",
+    "YOUR CRUMB STRUCTURE IS OPEN. SPIRITUALLY.",
+    "NO CAP — YOUR HYDRATION RATIO IS BUILT DIFFERENT",
+    "WE ARE SO BAKED",
+    "BREAD SAID RIZZ ACTIVATED",
+  ];
+
+  const candles = ['🕯️🕯️🕯️','🕯️🕯️🕯️🕯️','🕯️🕯️🕯️🕯️🕯️','🕯️🕯️🕯️🕯️🕯️🕯️🕯️','🕯️🕯️🕯️🕯️🕯️🕯️🕯️🕯️🕯️🕯️'];
+  const icons   = ['🍞','🥖','🥐','🫓','✨','⭐','🧈','💛'];
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2600);
+  }
+
+  function spawnFloater(x, y) {
+    for (let i = 0; i < 5; i++) {
+      const el = document.createElement('div');
+      el.className = 'floater';
+      el.textContent = icons[Math.floor(Math.random() * icons.length)];
+      el.style.left = (x + (Math.random() - 0.5) * 80) + 'px';
+      el.style.top  = (y + window.scrollY - 10) + 'px';
+      el.style.animationDelay = (Math.random() * 0.2) + 's';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1200);
+    }
+  }
+
+  prayBtn.addEventListener('click', e => {
+    prayCount++;
+    countEl.textContent = prayCount + ' PRAYER' + (prayCount !== 1 ? 'S' : '') + ' OFFERED';
+    candleEl.textContent = candles[Math.min(Math.floor((prayCount - 1) / 3), candles.length - 1)];
+
+    const faith = Math.min(prayCount, MAX_FAITH);
+    hpBar.style.width = (faith / MAX_FAITH * 100) + '%';
+    hpVal.textContent = faith + ' / ' + MAX_FAITH;
+
+    const msg = messages[Math.floor(Math.random() * messages.length)];
+    shrineMsg.textContent = msg;
+    showToast(msg);
+
+    const rect = prayBtn.getBoundingClientRect();
+    spawnFloater(rect.left + rect.width / 2, rect.top);
+  });
+
+  // ── LOAF CATCHER GAME ──
+  (function() {
+    const canvas  = document.getElementById('game-canvas');
+    const ctx     = canvas.getContext('2d');
+    const overlay = document.getElementById('game-overlay');
+    const goBtn   = document.getElementById('go-btn');
+    const goTitle = document.getElementById('go-title');
+    const goSub   = document.getElementById('go-sub');
+    const elScore = document.getElementById('g-score');
+    const elBest  = document.getElementById('g-best');
+    const elLives = document.getElementById('g-lives');
+
+    const W = 560, H = 420;
+    canvas.width  = W;
+    canvas.height = H;
+
+    const GOOD  = ['🍞','🥖','🥐','🫓','🧈'];
+    const BAD   = ['🚫'];
+    const BASKET_W = 72, BASKET_H = 36;
+    const ITEM_SIZE = 38;
+
+    let state, score, best, lives, basket, items, speed, spawnTimer, spawnInterval, raf;
+    let keys = {};
+
+    // Touch support
+    let touchX = null;
+    canvas.addEventListener('touchmove', e => {
+      e.preventDefault();
+      const r = canvas.getBoundingClientRect();
+      const scaleX = W / r.width;
+      touchX = (e.touches[0].clientX - r.left) * scaleX;
+    }, { passive: false });
+    canvas.addEventListener('touchend', () => { touchX = null; });
+
+    document.addEventListener('keydown', e => { keys[e.key] = true; });
+    document.addEventListener('keyup',   e => { keys[e.key] = false; });
+
+    function livesStr(n) { return '❤️'.repeat(Math.max(n,0)) || '💀'; }
+
+    function reset() {
+      score = 0; lives = 3;
+      basket = { x: W / 2 - BASKET_W / 2, y: H - 56, speed: 7 };
+      items = []; speed = 2.4; spawnTimer = 0; spawnInterval = 80;
+      elScore.textContent = 0;
+      elLives.textContent = livesStr(3);
+    }
+
+    function spawnItem() {
+      const isGood = Math.random() < 0.72;
+      const emoji  = isGood
+        ? GOOD[Math.floor(Math.random() * GOOD.length)]
+        : BAD[0];
+      items.push({
+        x: Math.random() * (W - ITEM_SIZE),
+        y: -ITEM_SIZE,
+        emoji,
+        good: isGood,
+        speed: speed + Math.random() * 1.2,
+      });
+    }
+
+    function drawEmoji(emoji, x, y, size) {
+      ctx.font = size + 'px serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(emoji, x, y);
+    }
+
+    function drawBasket(x, y) {
+      // pixelated bread pan
+      ctx.fillStyle = '#c9a84c';
+      ctx.fillRect(x, y + 8, BASKET_W, BASKET_H - 8);
+      ctx.fillStyle = '#f7c948';
+      ctx.fillRect(x + 4, y + 4, BASKET_W - 8, 8);
+      ctx.fillStyle = '#000';
+      ctx.fillRect(x, y + 8, 4, BASKET_H - 8);
+      ctx.fillRect(x + BASKET_W - 4, y + 8, 4, BASKET_H - 8);
+      ctx.fillRect(x, y + BASKET_H, BASKET_W, 4);
+      // label
+      ctx.font = '22px serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('🍞', x + BASKET_W / 2, y + 20);
+    }
+
+    function tick() {
+      if (state !== 'playing') return;
+
+      // Move basket
+      const spd = basket.speed;
+      if (keys['ArrowLeft']  || keys['a'] || keys['A']) basket.x -= spd;
+      if (keys['ArrowRight'] || keys['d'] || keys['D']) basket.x += spd;
+      if (touchX !== null) {
+        const target = touchX - BASKET_W / 2;
+        basket.x += (target - basket.x) * 0.22;
+      }
+      basket.x = Math.max(0, Math.min(W - BASKET_W, basket.x));
+
+      // Spawn
+      spawnTimer++;
+      if (spawnTimer >= spawnInterval) {
+        spawnItem();
+        spawnTimer = 0;
+        if (spawnInterval > 30) spawnInterval -= 0.4;
+        if (speed < 6) speed += 0.05;
+      }
+
+      // Update items
+      for (let i = items.length - 1; i >= 0; i--) {
+        const it = items[i];
+        it.y += it.speed;
+
+        // Catch check
+        const cx = it.x + ITEM_SIZE / 2;
+        const cy = it.y + ITEM_SIZE;
+        if (cy >= basket.y + 4 && cy <= basket.y + BASKET_H
+            && cx >= basket.x && cx <= basket.x + BASKET_W) {
+          items.splice(i, 1);
+          if (it.good) {
+            score++;
+            elScore.textContent = score;
+            if (score > best) { best = score; elBest.textContent = best; }
+          } else {
+            lives--;
+            elLives.textContent = livesStr(lives);
+            canvas.style.borderColor = '#e83030';
+            setTimeout(() => canvas.style.borderColor = 'var(--pink)', 300);
+            if (lives <= 0) { gameOver(); return; }
+          }
+          continue;
+        }
+
+        // Missed sacred bread
+        if (it.y > H) {
+          items.splice(i, 1);
+          if (it.good) {
+            lives--;
+            elLives.textContent = livesStr(lives);
+            canvas.style.borderColor = '#e83030';
+            setTimeout(() => canvas.style.borderColor = 'var(--pink)', 300);
+            if (lives <= 0) { gameOver(); return; }
+          }
+        }
+      }
+
+      draw();
+      raf = requestAnimationFrame(tick);
+    }
+
+    function draw() {
+      // BG — dark with pixel grid
+      ctx.fillStyle = '#0f0f1a';
+      ctx.fillRect(0, 0, W, H);
+
+      // subtle grid
+      ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < W; x += 28) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+      for (let y = 0; y < H; y += 28) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+
+      // ground
+      ctx.fillStyle = '#1a1a2e';
+      ctx.fillRect(0, H - 16, W, 16);
+      ctx.fillStyle = '#f7c948';
+      ctx.fillRect(0, H - 16, W, 4);
+
+      // items
+      items.forEach(it => drawEmoji(it.emoji, it.x + ITEM_SIZE/2, it.y + ITEM_SIZE/2, ITEM_SIZE));
+
+      // basket
+      drawBasket(basket.x, basket.y);
+    }
+
+    function startGame() {
+      state = 'playing';
+      overlay.style.display = 'none';
+      reset();
+      raf = requestAnimationFrame(tick);
+    }
+
+    function gameOver() {
+      state = 'over';
+      cancelAnimationFrame(raf);
+      overlay.style.display = 'flex';
+      goTitle.textContent = score >= 20 ? 'BLESSED!' : score >= 10 ? 'NOT BAD' : 'GAME OVER';
+      goTitle.style.color = score >= 20 ? 'var(--green)' : score >= 10 ? 'var(--yellow)' : 'var(--red)';
+      goSub.innerHTML = `SCORE: ${score}<br>${score >= 20 ? 'The Bread is pleased.' : score >= 10 ? 'More practice needed.' : 'A rice cake caught you. Shameful.'}`;
+      goBtn.textContent = '► PLAY AGAIN ◄';
+    }
+
+    goBtn.addEventListener('click', startGame);
+
+    // draw idle screen
+    draw();
+  })();
+
+  // ── HERO BURGER CLICK ──
+  document.getElementById('hero-burger').addEventListener('click', e => {
+    spawnFloater(e.clientX, e.clientY);
+    showToast(messages[Math.floor(Math.random() * messages.length)]);
+  });
+</script>
+</body>
+</html>
